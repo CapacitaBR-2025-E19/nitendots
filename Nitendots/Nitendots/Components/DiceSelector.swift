@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct Blue: View {
-    var number:UInt8 //ahaha
+struct DiceSelector: View {
+    var number:UInt8 = 0
     
     var body: some View {
         ZStack(content:{
@@ -16,13 +16,10 @@ struct Blue: View {
                 .frame(width: 120, height: 120)
                 .foregroundColor(.blue)
                 .cornerRadius(25)
-            //background (plano de fundo)
-            //foreground  (plano de frente)
-            
         })
     }
 }
 
 #Preview {
-    // SwiftUIView()
+    DiceSelector()
 }
