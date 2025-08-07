@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct RolagemDados: View {
     let appearance = {
         var appearanceInner = UINavigationBarAppearance()
         
@@ -109,7 +109,7 @@ struct ContentView: View {
 #Preview {
     NavigationStack {
         NavigationLink {
-            ContentView()
+            RolagemDados()
         } label: {
             Text("waow (clique aqui ó)")
         }
