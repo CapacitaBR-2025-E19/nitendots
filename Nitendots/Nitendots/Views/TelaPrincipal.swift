@@ -15,7 +15,7 @@ struct TelaPrincipal: View {
                     .ignoresSafeArea(.all)
                 
                 VStack (spacing: 20) {
-                    Text("NINTEDOTS")
+                    Text("NITENDOTS")
                         .font(.system(size: 30, weight: .bold, design: .default))
                     
                     Text("Escolha para onde ir:")
@@ -26,31 +26,49 @@ struct TelaPrincipal: View {
                     NavigationLink {
                         RolagemDados()
                     } label: {
-                        MenuButton(icon: "dice.fill", text: "DADOS")
+                        MenuButton(isDisabled: false, icon: "dice.fill", text: "DADOS")
                             .frame(width: UIScreen.main.bounds.width - 30, height: 90)
                    
                     }
                     
+                    // DELETAR O BOTÃO ABAIXO E HABILITAR O NAVIGATIONLINK QUANDO FEITO
+                    MenuButton(isDisabled: true, icon: "map.fill", text: "MAPAS")
+                        .frame(width: UIScreen.main.bounds.width - 30, height: 90)
+                    /*
                     NavigationLink {
                     } label: {
-                        MenuButton(icon: "map.fill", text: "MAPAS")
+                        MenuButton(isDisabled: true, icon: "map.fill", text: "MAPAS")
+                            .frame(width: UIScreen.main.bounds.width - 30, height: 90)
+                   
+                    } */
+                    
+                    // MESMA COISA AQUI!!!!!
+                    MenuButton(isDisabled: true, icon: "person.2.fill", text: "PERSONAGENS")
+                        .frame(width: UIScreen.main.bounds.width - 30, height: 90)
+                    /*
+                    NavigationLink {
+                    } label: {
+                        MenuButton(isDisabled: true, icon: "person.2.fill", text: "PERSONAGENS")
+                            .frame(width: UIScreen.main.bounds.width - 30, height: 90)
+                   
+                    }*/
+                    
+                    NavigationLink {
+                    } label: {
+                        MenuButton(isDisabled: false, icon: "gearshape.fill", text: "CONFIGURAÇÕES")
                             .frame(width: UIScreen.main.bounds.width - 30, height: 90)
                    
                     }
                     
-                    NavigationLink {
-                    } label: {
-                        MenuButton(icon: "person.2.fill", text: "PERSONAGENS")
-                            .frame(width: UIScreen.main.bounds.width - 30, height: 90)
-                   
-                    }
+                    // Fim dos Links de Navigação
                     
-                    NavigationLink {
-                    } label: {
-                        MenuButton(icon: "gearshape.fill", text: "CONFIGURAÇÕES")
-                            .frame(width: UIScreen.main.bounds.width - 30, height: 90)
-                   
-                    }
+                    Text("Aplicativo em desenvolvimento, alguns itens não estão funcionais!")
+                        .multilineTextAlignment(.center)
+                        .frame(width: UIScreen.main.bounds.width, height: 60)
+                        .background {
+                            Rectangle()
+                                .foregroundStyle(Color.orange)
+                        }
                 }
             }
         }
