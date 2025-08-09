@@ -9,7 +9,9 @@ import Foundation
 import SwiftUI
 
 // STRUCT DE BASE
-struct Theme {
+struct Theme : Identifiable{
+    var id:UUID = UUID()
+    
     var accent:Color
     var closeButton:Color
     var primary:Color
