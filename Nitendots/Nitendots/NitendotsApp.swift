@@ -11,6 +11,7 @@ import SwiftUI
 struct NitendotsApp: App {
     var body: some Scene {
         WindowGroup {
+            TelaPrincipal()
         }
     }
 }

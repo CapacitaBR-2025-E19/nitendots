@@ -37,16 +37,19 @@ struct ThemeSelector: View {
                 HStack {
                     RoundedRectangle(cornerRadius: size*3)
                         .frame(width: size*8, height: size*3)
+                        .foregroundStyle(theme.text)
                     
                     Spacer()
                     
                     RoundedRectangle(cornerRadius: size*5)
                         .frame(width: size*24, height: size*9)
+                        .foregroundStyle(Color.black)
                     
                     Spacer()
                     
                     RoundedRectangle(cornerRadius: size*3)
                         .frame(width: size*8, height: size*3)
+                        .foregroundStyle(theme.text)
                 } .padding(.horizontal, size*12)
                     .padding(.top, size*5)
                 // Fim da status bar
@@ -63,6 +66,7 @@ struct ThemeSelector: View {
                         
                         RoundedRectangle(cornerRadius: size*3)
                             .frame(width: size*24, height: size*3)
+                            .foregroundStyle(theme.text)
                         
                         RoundedRectangle(cornerRadius: size*3)
                             .frame(width: size*18, height: size*3)
@@ -143,7 +147,7 @@ struct ThemeSelector: View {
             .ignoresSafeArea(edges: .all)
         ScrollView(.horizontal, showsIndicators: true) {
             HStack(spacing: 25) {
-                ForEach(themes) { theme in
+                ForEach(ThemeManager.shared.Themes) { theme in
                     ThemeSelector(size: 1, theme: theme)
                 }
             }

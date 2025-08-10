@@ -54,6 +54,7 @@ struct TelaPrincipal: View {
                     }*/
                     
                     NavigationLink {
+                        Configuracoes()
                     } label: {
                         MenuButton(isDisabled: false, icon: "gearshape.fill", text: "CONFIGURAÇÕES")
                             .frame(width: UIScreen.main.bounds.width - 30, height: 90)
