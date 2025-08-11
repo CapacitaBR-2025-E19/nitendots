@@ -8,18 +8,22 @@
 import SwiftUI
 
 struct TelaPrincipal: View {
+    @ObservedObject var themeManager = ThemeManager.shared
+    
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.gray.opacity(0.3)
+                themeManager.ActiveTheme.secondary
                     .ignoresSafeArea(.all)
                 
                 VStack (spacing: 20) {
                     Text("NITENDOTS")
                         .font(.system(size: 30, weight: .bold, design: .default))
+                        .foregroundStyle(themeManager.ActiveTheme.text)
                     
                     Text("Escolha para onde ir:")
                         .padding(.bottom, 50)
+                        .foregroundStyle(themeManager.ActiveTheme.text)
                     
                     // Links de Navigação
                     
@@ -68,11 +72,14 @@ struct TelaPrincipal: View {
                         .frame(width: UIScreen.main.bounds.width, height: 60)
                         .background {
                             Rectangle()
-                                .foregroundStyle(Color.orange)
+                                .foregroundStyle(
+                                    themeManager.ActiveTheme.accent == Color.accent4 ? Color.red : Color.orange
+                                )
                         }
                 }
             }
         }
+        .tint(themeManager.ActiveTheme.accent)
     }
 }
 

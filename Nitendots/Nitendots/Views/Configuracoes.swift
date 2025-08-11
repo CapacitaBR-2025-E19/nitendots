@@ -34,14 +34,14 @@ struct Configuracoes: View {
                                             .font(.system(size: 20))
                                         Text("Português (pt-BR)")
                                             .font(.system(size: 15))
-                                            .foregroundColor(.black)
+                                            .foregroundColor(themeManager.ActiveTheme.text)
                                     }
                                 }
                             }
                         )
                         .badge("Pop-Up")
                         .listRowBackground(Color.clear)
-                        .foregroundStyle(ThemeManager.shared.ActiveTheme.text)
+                        .foregroundStyle(themeManager.ActiveTheme.text)
                         // Fim do Botão de Idioma
                         
                         // Botão de Tema
@@ -59,13 +59,14 @@ struct Configuracoes: View {
                                             .font(.system(size: 20))
                                         Text("Claro (Padrão do Sistema)")
                                             .font(.system(size: 15))
-                                            .foregroundColor(.black)
+                                            .foregroundColor(themeManager.ActiveTheme.text)
                                     }
                                 }
                             }
                         )
                         .badge("Pop-Up")
                         .listRowBackground(Color.clear)
+                        .foregroundStyle(themeManager.ActiveTheme.text)
                         // Fim do Botão de Tema
                         
                         // Informativo dos Temas
@@ -78,10 +79,11 @@ struct Configuracoes: View {
                                     .font(.system(size: 20))
                                 Text("Deslize e selecione!")
                                     .font(.system(size: 15))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(themeManager.ActiveTheme.text)
                             }
                         }
                         .listRowBackground(Color.clear)
+                        .foregroundStyle(themeManager.ActiveTheme.text)
                         // Fim do Informativo dos Temas
                         
                         
@@ -113,15 +115,17 @@ struct Configuracoes: View {
                     RoundedRectangle(cornerRadius: 2)
                         .frame(width: UIScreen.main.bounds.width-30, height: 1)
                         .padding()
-                        .foregroundStyle(Color.gray)
+                        .foregroundStyle(themeManager.ActiveTheme.text)
                     
                     Image(systemName: "person.3.fill")
                         .font(.system(size: 50, weight: .bold))
                         .padding()
+                        .foregroundStyle(themeManager.ActiveTheme.text)
                     
                     Text("Equipe 19 - Capacita Brasil 2025")
                         .multilineTextAlignment(.center)
                         .padding()
+                        .foregroundStyle(themeManager.ActiveTheme.text)
                     
                     Text("""
                     Mentor 1
@@ -142,12 +146,13 @@ struct Configuracoes: View {
                     """)
                     .multilineTextAlignment(.center)
                     .padding()
+                    .foregroundStyle(themeManager.ActiveTheme.text)
                 }
             }
         }
         
-        .navigationTitle(Text("Configurações"))
-            .toolbarBackground(Color.white, for: .navigationBar)
+        .navigationTitle(Text("Configurações").foregroundStyle(themeManager.ActiveTheme.text))
+        .toolbarBackground(themeManager.ActiveTheme.primary, for: .navigationBar)
             .toolbarBackgroundVisibility(.visible)
     }
 }

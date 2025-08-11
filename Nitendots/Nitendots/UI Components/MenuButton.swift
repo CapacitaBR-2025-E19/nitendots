@@ -17,23 +17,25 @@ struct MenuButton: View {
     // Variável de estado
     @State private var buttonState:MenuButtonState = .normal
     
+    @ObservedObject var themeManager = ThemeManager.shared
+    
     // Variáveis de cor de foreground e background
     var colorFg:Color {
         switch buttonState {
             case .normal, .disabled:
-                return Color.white
+                return themeManager.ActiveTheme.primary
             case .pressed:
-                return Color.blue
+                return themeManager.ActiveTheme.accent
         }
     }
     var colorBg:Color {
         switch buttonState {
             case .normal:
-                return Color.blue
+                return themeManager.ActiveTheme.accent
             case .pressed:
-                return Color.blue.opacity(0.3)
+                return themeManager.ActiveTheme.accent.opacity(0.3)
             case .disabled:
-                return Color.gray
+                return themeManager.ActiveTheme.tertiary
         }
     }
     
