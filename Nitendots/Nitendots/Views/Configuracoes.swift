@@ -22,7 +22,7 @@ struct Configuracoes: View {
                         // Botão de Idioma
                         Button(
                             action: {
-                                print("hi")
+                                print("hi3")
                             },
                             label: {
                                 HStack {
@@ -34,19 +34,20 @@ struct Configuracoes: View {
                                             .font(.system(size: 20))
                                         Text("Português (pt-BR)")
                                             .font(.system(size: 15))
-                                            .foregroundColor(.gray)
+                                            .foregroundColor(.black)
                                     }
                                 }
                             }
                         )
                         .badge("Pop-Up")
                         .listRowBackground(Color.clear)
+                        .foregroundStyle(ThemeManager.shared.ActiveTheme.text)
                         // Fim do Botão de Idioma
                         
                         // Botão de Tema
                         Button(
                             action: {
-                                print("hi")
+                                print("hi2")
                             },
                             label: {
                                 HStack {
@@ -58,7 +59,7 @@ struct Configuracoes: View {
                                             .font(.system(size: 20))
                                         Text("Claro (Padrão do Sistema)")
                                             .font(.system(size: 15))
-                                            .foregroundColor(.gray)
+                                            .foregroundColor(.black)
                                     }
                                 }
                             }
@@ -77,7 +78,7 @@ struct Configuracoes: View {
                                     .font(.system(size: 20))
                                 Text("Deslize e selecione!")
                                     .font(.system(size: 15))
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(.black)
                             }
                         }
                         .listRowBackground(Color.clear)
@@ -100,7 +101,7 @@ struct Configuracoes: View {
                                     label: {
                                         ThemeSelector(size: 1, theme: theme)
                                             .shadow(
-                                                color: theme.isActive ? Color.blue : Color.gray,
+                                                color: theme.isActive ? themeManager.ActiveTheme.accent : Color.gray,
                                                     radius: 10)
                                     }
                                 )
