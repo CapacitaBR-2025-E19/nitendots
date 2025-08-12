@@ -10,6 +10,9 @@ import SwiftUI
 struct Configuracoes: View {
     @ObservedObject var themeManager = ThemeManager.shared
     
+    @State var isLangSheetShown = false
+    @State var isThemeSheetShown = false
+    
     var body: some View {
         ZStack (alignment: .center) {
             themeManager.ActiveTheme.secondary
@@ -22,7 +25,7 @@ struct Configuracoes: View {
                         // Botão de Idioma
                         Button(
                             action: {
-                                print("hi3")
+                                isLangSheetShown.toggle()
                             },
                             label: {
                                 HStack {
@@ -47,7 +50,7 @@ struct Configuracoes: View {
                         // Botão de Tema
                         Button(
                             action: {
-                                print("hi2")
+                                isThemeSheetShown.toggle()
                             },
                             label: {
                                 HStack {
@@ -154,6 +157,17 @@ struct Configuracoes: View {
         .navigationTitle(Text("Configurações").foregroundStyle(themeManager.ActiveTheme.text))
         .toolbarBackground(themeManager.ActiveTheme.primary, for: .navigationBar)
             .toolbarBackgroundVisibility(.visible)
+        
+        // sheets
+        .sheet(isPresented: $isLangSheetShown) {
+            Text("hi")
+            .presentationDetents([.medium])
+        }
+        
+        .sheet(isPresented: $isThemeSheetShown) {
+            Text("hi")
+            .presentationDetents([.medium])
+        }
     }
 }
 
