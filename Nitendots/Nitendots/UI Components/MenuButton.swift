@@ -17,7 +17,7 @@ struct MenuButton: View {
     // Variável de estado
     @State private var buttonState:MenuButtonState = .normal
     
-    @ObservedObject var themeManager = ThemeManager.shared
+    @ObservedObject private var themeManager = ThemeManager.shared
     
     // Variáveis de cor de foreground e background
     var colorFg:Color {

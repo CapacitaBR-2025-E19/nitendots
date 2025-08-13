@@ -165,8 +165,27 @@ struct Configuracoes: View {
         }
         
         .sheet(isPresented: $isThemeSheetShown) {
-            Text("hi")
-            .presentationDetents([.medium])
+            VStack {
+                // Botão e Titulo
+                ZStack() {
+                    Text("Modo do Tema")
+                        .font(.headline)
+                        .foregroundStyle(themeManager.ActiveTheme.text)
+                    
+                    HStack {
+                        Spacer()
+                        
+                        CloserButton(size: 1)
+                    }
+                }
+                // Fim do botão e titulo
+                
+                Spacer()
+            }
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
+                .presentationBackground(themeManager.ActiveTheme.primary)
+            .navigationTitle(Text("hi"))
         }
     }
 }
