@@ -107,6 +107,8 @@ struct RolagemDados: View {
 }
 
 #Preview {
+    RolagemDados()
+    /*
     NavigationStack {
         NavigationLink {
             RolagemDados()
@@ -114,4 +116,5 @@ struct RolagemDados: View {
             Text("waow (clique aqui ó)")
         }
     }
+    */
 }

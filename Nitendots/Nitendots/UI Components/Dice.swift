@@ -7,12 +7,31 @@
 
 import SwiftUI
 
-struct SwiftUIView: View {
+struct Dice: View {
+    @ObservedObject var themeManager = ThemeManager.shared
+    
+    let size:CGFloat
+    let diceType:DiceType
+    let diceValue:Int
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        diceType.shapeUnsized
+            .font(.system(size: size*100))
+            .frame(width: size*100, height: size*100)
+            .overlay{
+                Text("\(diceValue)")
+                    .font(.system(size: size*40, weight: .bold))
+                    .foregroundStyle(themeManager.ActiveTheme.text)
+            }
+            .foregroundStyle(themeManager.ActiveTheme.primary)
+            .shadow(radius: size*10)
     }
 }
 
 #Preview {
-    SwiftUIView()
+    ZStack {
+        ThemeManager.shared.ActiveTheme.secondary
+        
+        Dice(size: 1, diceType: .d00, diceValue: 40)
+    }
 }
