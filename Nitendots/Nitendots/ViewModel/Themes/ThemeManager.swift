@@ -24,7 +24,18 @@ class ThemeManager:ObservableObject {
         set {return UserDefaults.standard.set(newValue, forKey: "theme")}
     } // não precisa de uma verificação nil pois o próprio metodo já faz e padroniza ao 0, tema padrão do aplicativo :)
     
+    fileprivate var ActiveThemeMode:Int {
+        get {return UserDefaults.standard.integer(forKey: "themeMode")}
+        set {return UserDefaults.standard.set(newValue, forKey: "themeMode")}
+    }
+    
+    /// Custom Theme Object
     @Published var ActiveTheme:Theme! = nil
+    
+    /// Dark/Light
+    @Published var ActiveMode:ColorScheme! = nil
+    
+    @Published var EnumActiveMode:ThemeMode! = nil
     
     // FUNÇÕES
     func setTheme(_ theme:Theme) {
@@ -45,10 +56,37 @@ class ThemeManager:ObservableObject {
         }
     }
     
+    func setMode(_ mode:ThemeMode) {
+        EnumActiveMode = mode
+        
+        ActiveThemeMode = mode.rawValue
+        
+        switch EnumActiveMode {
+            case .dark:
+                ActiveMode = .dark
+            case .light:
+                ActiveMode = .light
+            case .system, nil:
+                ActiveMode = UIScreen.main.traitCollection.userInterfaceStyle == .dark ? .dark : .light
+        }
+    }
+    
+    // INICIALIZADOR
     init() {
         ActiveTheme = Themes[ActiveThemeIndex]
         
         Themes[ActiveThemeIndex].isActive = true
+        
+        EnumActiveMode = ThemeMode(rawValue: ActiveThemeMode) ?? .system
+        
+        switch EnumActiveMode {
+            case .dark:
+                ActiveMode = .dark
+            case .light:
+                ActiveMode = .light
+            case .system, nil:
+                ActiveMode = UIScreen.main.traitCollection.userInterfaceStyle == .dark ? .dark : .light
+        }
     }
     
     static var shared:ThemeManager = .init()

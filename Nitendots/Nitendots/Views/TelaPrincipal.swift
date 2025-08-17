@@ -80,6 +80,7 @@ struct TelaPrincipal: View {
             }
         }
         .tint(themeManager.ActiveTheme.accent)
+        .preferredColorScheme(themeManager.ActiveMode)
     }
 }
 

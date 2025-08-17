@@ -10,6 +10,8 @@ import SwiftUI
 struct Configuracoes: View {
     @ObservedObject var themeManager = ThemeManager.shared
     
+    @State var themeMode = ThemeManager.shared.EnumActiveMode
+    
     @State var isLangSheetShown = false
     @State var isThemeSheetShown = false
     
@@ -25,7 +27,7 @@ struct Configuracoes: View {
                         // Botão de Idioma
                         Button(
                             action: {
-                                isLangSheetShown.toggle()
+                                // isLangSheetShown.toggle()
                             },
                             label: {
                                 HStack {
@@ -37,14 +39,14 @@ struct Configuracoes: View {
                                             .font(.system(size: 20))
                                         Text("Português (pt-BR)")
                                             .font(.system(size: 15))
-                                            .foregroundColor(themeManager.ActiveTheme.text)
+                                            .foregroundColor(themeManager.ActiveTheme.tertiary)
                                     }
                                 }
                             }
                         )
-                        .badge("Pop-Up")
+                        .badge("Não Disponivel")
                         .listRowBackground(Color.clear)
-                        .foregroundStyle(themeManager.ActiveTheme.text)
+                        .foregroundStyle(themeManager.ActiveTheme.tertiary)
                         // Fim do Botão de Idioma
                         
                         // Botão de Tema
@@ -106,7 +108,7 @@ struct Configuracoes: View {
                                     label: {
                                         ThemeSelector(size: 1, theme: theme)
                                             .shadow(
-                                                color: theme.isActive ? themeManager.ActiveTheme.accent : Color.gray,
+                                                color: theme.isActive ? themeManager.ActiveTheme.accent : themeManager.ActiveTheme.tertiary,
                                                     radius: 10)
                                     }
                                 )
@@ -159,10 +161,6 @@ struct Configuracoes: View {
             .toolbarBackgroundVisibility(.visible)
         
         // sheets
-        .sheet(isPresented: $isLangSheetShown) {
-            Text("hi")
-            .presentationDetents([.medium])
-        }
         
         .sheet(isPresented: $isThemeSheetShown) {
             VStack {
@@ -180,9 +178,22 @@ struct Configuracoes: View {
                 }
                 // Fim do botão e titulo
                 
+                Picker("teste", selection: $themeMode) {
+                    Text("Claro").tag(ThemeMode.light)
+                    Text("Escuro").tag(ThemeMode.dark)
+                    Text("Padrão do Sistema").tag(ThemeMode.system)
+                }
+                .pickerStyle(.segmented)
+                .padding()
+                .onChange(of: themeMode!) { oldValue, newValue in
+                    themeManager.setMode(newValue)
+                    
+                    isThemeSheetShown = false
+                }
+                
                 Spacer()
             }
-                .presentationDetents([.medium])
+            .presentationDetents([.height(200)])
                 .presentationDragIndicator(.visible)
                 .presentationBackground(themeManager.ActiveTheme.primary)
             .navigationTitle(Text("hi"))
