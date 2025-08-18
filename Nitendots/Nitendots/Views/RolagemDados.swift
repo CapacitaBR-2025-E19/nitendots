@@ -29,25 +29,22 @@ struct RolagemDados: View {
                         .frame(width: UIScreen.main.bounds.width + 20)
                     
                     // Stack Vertical (central)
-                    VStack {
+                    VStack (alignment: .center, spacing: 0) {
                         Spacer()
                         
-                        // Grid de dados
                         LazyVGrid(columns: [.init(), .init()], spacing: 32) {
-                            ForEach(1..<11) { _ in
-                                Rectangle()
-                                    .frame(width: 80, height: 80)
-                                    .foregroundStyle(Color.white)
-                                    .cornerRadius(20)
-                                    .rotationEffect(.init(degrees: 45))
-                                    .shadow(color: .black.opacity(0.4), radius: 5)
-                                    .overlay() {
-                                        Text("8")
-                                            .font(.system(size: 35, weight: .bold, design: .monospaced))
-                                            .foregroundStyle(.gray)
-                                    }
+                            ForEach(diceManager.latestRoll.dropLast(diceManager.latestRoll.count % 2)) { diceModel in
+                                Dice(size: 0.8, diceModel: diceModel)
                             }
-                        } .frame(maxWidth: UIScreen.main.bounds.width)
+                        }
+                        .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: CGFloat(50 * diceManager.latestRoll.dropLast(diceManager.latestRoll.count % 2).count)) // que codigo lindo e legível
+                        
+                        LazyHStack {
+                            ForEach(diceManager.latestRoll.dropFirst(diceManager.latestRoll.count - (diceManager.latestRoll.count % 2))) { diceModel in
+                                Dice(size: 0.8, diceModel: diceModel)
+                            }
+                        }
+                        .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: CGFloat(50 * diceManager.latestRoll.dropFirst(diceManager.latestRoll.count - (diceManager.latestRoll.count % 2)).count))
                         
                         Spacer()
                     }
@@ -58,7 +55,7 @@ struct RolagemDados: View {
                     // Botão de rolagem
                     Button(
                         action: {
-                            print("rolar dados")
+                            diceManager.roll(diceType: diceManager.currentType, count: Int(diceManager.currentCount))
                         },
                         label: {
                             RoundedRectangle(cornerRadius: 30)
@@ -95,7 +92,7 @@ struct RolagemDados: View {
         }
         
         // Toolbar
-        .navigationTitle(Text("🎲 Dados 🎲").foregroundStyle(themeManager.ActiveTheme.text))
+        .navigationTitle(Text("🎲 Dados 🎲"))
         .toolbarBackground(themeManager.ActiveTheme.primary, for: .navigationBar)
             .toolbarBackgroundVisibility(.visible)
             .toolbar {

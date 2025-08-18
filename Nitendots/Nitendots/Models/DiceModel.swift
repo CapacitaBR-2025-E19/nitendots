@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct DiceModel {
+struct DiceModel: Identifiable {
+    let id:UUID = .init()
+    
     var type:DiceType
     
     var rolledValue:Int
