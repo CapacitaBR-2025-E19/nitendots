@@ -196,7 +196,6 @@ struct Configuracoes: View {
             .presentationDetents([.height(200)])
                 .presentationDragIndicator(.visible)
                 .presentationBackground(themeManager.ActiveTheme.primary)
-            .navigationTitle(Text("hi"))
         }
     }
 }

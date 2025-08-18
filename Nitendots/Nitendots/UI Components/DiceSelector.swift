@@ -7,47 +7,37 @@
 
 import SwiftUI
 
-struct DiceSelector: View {
-    let diceType:DiceType
+
+
+struct DiceSelector: View, Identifiable {
+    @ObservedObject private var themeManager = ThemeManager.shared
     
-    @State var toggled:Bool
+    let diceType:DiceType
+    let id:UUID
+    
+    var toggled:Bool
     
     // Corpo do Seletor
     var body: some View {
-        ZStack(content:{
-            Button(
-                action: {
-                    toggled = !toggled
-                },
-                label: {
-                    Rectangle()
-                        .frame(width: 120, height: 120)
-                        .foregroundColor(toggled ? .blue.opacity(0.15) : .blue)
-                        .cornerRadius(25)
-                        .overlay (alignment: .top) {
-                            VStack (alignment: .center, spacing: 0) {
-                                // Symbol
-                                diceType.shape
-                                    .foregroundStyle(toggled ? Color.blue  : Color.white)
-                                    .frame(width: 45, height: 45) // frame constante, tamanho não
-                                    .padding(.top, 10)
-                                // Number
-                                Text(diceType.rawValue)
-                                    .font(.system(size: 50, weight: .semibold))
-                                    .foregroundStyle(toggled ? Color.blue : Color.white)
-                            }
-                        }
+        ZStack {
+            Rectangle()
+                .frame(width: 120, height: 120)
+                .foregroundColor(toggled ? themeManager.ActiveTheme.accent.opacity(0.15) : themeManager.ActiveTheme.accent)
+                .cornerRadius(25)
+                .overlay (alignment: .top) {
+                    VStack (alignment: .center, spacing: 0) {
+                        // Symbol
+                        diceType.shape
+                            .foregroundStyle(toggled ? themeManager.ActiveTheme.accent  : themeManager.ActiveTheme.primary)
+                            .frame(width: 45, height: 45) // frame constante, tamanho não
+                            .padding(.top, 10)
+                        // Number
+                        Text(diceType.rawValue)
+                            .font(.system(size: 50, weight: .semibold))
+                            .foregroundStyle(toggled ? themeManager.ActiveTheme.accent : themeManager.ActiveTheme.primary)
+                    }
                 }
-            )
-
-                /*
-                .onTapGesture {
-                    toggled = !toggled
-                    
-                    // implementar isso aqui depois: https://www.youtube.com/watch?v=JdUs3GD2zzI
-                }
-                */
-        })
+        }
     }
 }
 
@@ -56,17 +46,17 @@ struct DiceSelector: View {
     VStack{
         HStack {
             VStack {
-                DiceSelector(diceType: .d4, toggled: false)
-                DiceSelector(diceType: .d6, toggled: false)
-                DiceSelector(diceType: .d8, toggled: false)
+                DiceSelector(diceType: .d4, id: .init(), toggled: true)
+                DiceSelector(diceType: .d6, id: .init(), toggled: false)
+                DiceSelector(diceType: .d8, id: .init(), toggled: false)
             }
             VStack {
-                DiceSelector(diceType: .d10, toggled: false)
-                DiceSelector(diceType: .d12, toggled: false)
-                DiceSelector(diceType: .d20, toggled: false)
+                DiceSelector(diceType: .d10, id: .init(), toggled: false)
+                DiceSelector(diceType: .d12, id: .init(), toggled: false)
+                DiceSelector(diceType: .d20, id: .init(), toggled: false)
             }
         }
         
-        DiceSelector(diceType: .d00, toggled: false)
+        DiceSelector(diceType: .d00, id: .init(), toggled: false)
     }
 }

@@ -26,6 +26,17 @@ struct Dice: View {
             .foregroundStyle(themeManager.ActiveTheme.primary)
             .shadow(radius: size*10)
     }
+    
+    init(size: CGFloat, diceType: DiceType, diceValue: Int) {
+        self.size = size
+        self.diceType = diceType
+        self.diceValue = diceValue
+    }
+    init(size: CGFloat, diceModel: DiceModel) {
+        self.size = size
+        self.diceType = diceModel.type
+        self.diceValue = diceModel.rolledValue
+    }
 }
 
 #Preview {
