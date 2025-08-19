@@ -21,7 +21,7 @@ struct Configuracoes: View {
                 .ignoresSafeArea(edges: .all)
             
             ScrollView(.vertical, showsIndicators: true) {
-                VStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
                     // Lista
                     List {
                         // Botão de Idioma
@@ -122,41 +122,41 @@ struct Configuracoes: View {
                         .padding()
                         .foregroundStyle(themeManager.ActiveTheme.text)
                     
-                    Image(systemName: "person.3.fill")
-                        .font(.system(size: 50, weight: .bold))
-                        .padding()
-                        .foregroundStyle(themeManager.ActiveTheme.text)
+                    HStack {
+                        Image(systemName: "person.3.fill")
+                            .font(.system(size: 50, weight: .bold))
+                            .padding()
+                            .foregroundStyle(themeManager.ActiveTheme.text)
+                        
+                        Text("Sobre a equipe:")
+                            .font(.system(size: 20, weight: .bold))
+                            .foregroundStyle(themeManager.ActiveTheme.text)
+                    }
                     
                     Text("Equipe 19 - Capacita Brasil 2025")
-                        .multilineTextAlignment(.center)
                         .padding()
                         .foregroundStyle(themeManager.ActiveTheme.text)
+                        .font(.system(size: 17,weight: .bold))
                     
                     Text("""
-                    Mentor 1
-                    Mentor 2
+                    Mentor de Design: Lais Cristine
+                    Mentor de Codigo: Ian Pacini
                     
-                    Aluno 1
-                    Aluno 2
-                    Aluno 3
-                    Aluno 4
-                    Aluno 5
-                    Aluno 6
-                    Aluno 7
-                    Aluno 8
-                    Aluno 9
-                    Aluno 10
+                    - Igor de Alencar Faustino
+                    - Rian Lima da Silva
+                    - Lucas Costa de Jesus
+                    - Enzo Medeiros de Sena
+                    - Francisco Lupercio Pedroso F. N.
                     
-                    Agradecemos por usar nosso projeto :)
+                    Agradecemos por usar nosso projeto! :)
                     """)
-                    .multilineTextAlignment(.center)
                     .padding()
                     .foregroundStyle(themeManager.ActiveTheme.text)
                 }
             }
         }
         
-        .navigationTitle(Text("Configurações").foregroundStyle(themeManager.ActiveTheme.text))
+        .navigationTitle(Text("Configurações"))
         .toolbarBackground(themeManager.ActiveTheme.primary, for: .navigationBar)
             .toolbarBackgroundVisibility(.visible)
         

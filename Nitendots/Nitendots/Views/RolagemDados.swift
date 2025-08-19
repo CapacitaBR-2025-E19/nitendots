@@ -48,6 +48,7 @@ struct RolagemDados: View {
                         
                         Spacer()
                     }
+                    
                 }
                 
                 // Tab Bar
@@ -92,7 +93,7 @@ struct RolagemDados: View {
         }
         
         // Toolbar
-        .navigationTitle(Text("🎲 Dados 🎲"))
+        .navigationTitle(Text("Dados"))
         .toolbarBackground(themeManager.ActiveTheme.primary, for: .navigationBar)
             .toolbarBackgroundVisibility(.visible)
             .toolbar {
