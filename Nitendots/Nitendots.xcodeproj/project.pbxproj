@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0226B6412E554A9100B02AA2 /* Zoomable in Frameworks */ = {isa = PBXBuildFile; productRef = 0226B6402E554A9100B02AA2 /* Zoomable */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		02DE4D902E284FD500115DB6 /* Nitendots.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nitendots.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0226B6412E554A9100B02AA2 /* Zoomable in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = Nitendots;
 			packageProductDependencies = (
+				0226B6402E554A9100B02AA2 /* Zoomable */,
 			);
 			productName = Nitendots;
 			productReference = 02DE4D902E284FD500115DB6 /* Nitendots.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 02DE4D872E284FD500115DB6;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0226B63F2E554A9100B02AA2 /* XCRemoteSwiftPackageReference "Zoomable" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 02DE4D912E284FD500115DB6 /* Products */;
 			projectDirPath = "";
@@ -322,6 +331,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0226B63F2E554A9100B02AA2 /* XCRemoteSwiftPackageReference "Zoomable" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ryohey/Zoomable.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0226B6402E554A9100B02AA2 /* Zoomable */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0226B63F2E554A9100B02AA2 /* XCRemoteSwiftPackageReference "Zoomable" */;
+			productName = Zoomable;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 02DE4D882E284FD500115DB6 /* Project object */;
 }
