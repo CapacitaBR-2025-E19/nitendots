@@ -8,49 +8,54 @@
 import SwiftUI
 
 struct CharacterModal: View {
-    @ObservedObject private var themeManager: ThemeManager = .shared
+    @ObservedObject private var themeManager:ThemeManager = .shared
+    
+    var size:CGFloat
+    
+    var character:CharacterModel
     
     var body: some View {
         ZStack(alignment: .top) {
             UnevenRoundedRectangle(cornerRadii:
-                    .init(topLeading: 60, bottomLeading: 40, bottomTrailing: 40, topTrailing: 40)
+                    .init(topLeading: 60*size, bottomLeading: 40*size, bottomTrailing: 40*size, topTrailing: 40*size)
             )
-            .frame(width: 350, height: 300)
+            .frame(width: 350*size, height: 300*size)
             .foregroundStyle(themeManager.ActiveTheme.primary)
             .overlay {
                 VStack(spacing: 0) {
                     Spacer()
-                        .frame(height: 130)
+                        .frame(height: 130*size)
                     
                     Text("Descrição:")
-                        .font(.system(size: 18, weight: .bold))
+                        .font(.system(size: 18*size, weight: .bold))
                         .foregroundStyle(themeManager.ActiveTheme.text)
                     
-                    Text("Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
+                    Text(character.shortDescription)
                         .padding(.horizontal)
                         .lineLimit(3)
                         .foregroundStyle(themeManager.ActiveTheme.text)
+                        .font(.system(size: 16*size, weight: .regular))
                     
                     Spacer()
                     
-                    HStack(spacing: -20) {
-                        RoundedRectangle(cornerRadius: 30)
-                            .frame(width: 100, height: 55)
+                    HStack(spacing: -20*size) {
+                        RoundedRectangle(cornerRadius: 30*size)
+                            .frame(width: 100*size, height: 55*size)
                             .padding(.horizontal)
                             .foregroundStyle(themeManager.ActiveTheme.tertiary)
                             .overlay {
                                 Image(systemName: "gearshape.fill")
-                                    .font(.system(size: 30))
+                                    .font(.system(size: 30*size))
                                     .foregroundStyle(themeManager.ActiveTheme.primary)
                             }
                         
-                        RoundedRectangle(cornerRadius: 30)
-                            .frame(height: 55)
+                        RoundedRectangle(cornerRadius: 30*size)
+                            .frame(height: 55*size)
                             .padding(.horizontal)
                             .foregroundStyle(themeManager.ActiveTheme.tertiary)
                             .overlay{
                                 Image(systemName: "gamecontroller.fill")
-                                    .font(.system(size: 30))
+                                    .font(.system(size: 30*size))
                                     .foregroundStyle(themeManager.ActiveTheme.primary)
                             }
                     }
@@ -58,12 +63,12 @@ struct CharacterModal: View {
                     Spacer()
                 }
             }
-            .shadow(radius: 10)
+            .shadow(radius: 10*size)
             
             UnevenRoundedRectangle(cornerRadii:
-                    .init(topLeading: 60, bottomLeading: 60, bottomTrailing: 40, topTrailing: 40)
+                    .init(topLeading: 60*size, bottomLeading: 60*size, bottomTrailing: 40*size, topTrailing: 40*size)
             )
-            .frame(width: 350, height: 120)
+            .frame(width: 350*size, height: 120*size)
             .foregroundStyle(themeManager.ActiveTheme.primary)
             .overlay {
                 HStack {
@@ -71,62 +76,80 @@ struct CharacterModal: View {
                         .foregroundStyle(themeManager.ActiveTheme.primary)
                         .overlay {
                             Circle()
-                                .padding(7.5)
+                                .padding(7.5*size)
                                 .foregroundStyle(.blue) // imagem
                         }
                     
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("La Creatura")
-                            .font(.system(size: 18, weight: .bold))
+                    VStack(alignment: .leading, spacing: 5*size) {
+                        Text(character.name)
+                            .font(.system(size: 18*size, weight: .bold))
                             .foregroundStyle(themeManager.ActiveTheme.text)
                         
-                        HStack(spacing: 5) {
+                        HStack(spacing: 5*size) {
                             Text("Classe:")
                                 .foregroundStyle(themeManager.ActiveTheme.text)
+                                .font(.system(size: 16*size, weight: .regular))
                             
-                            Text("Clero")
+                            Text(character.classification.rawValue)
                                 .foregroundStyle(themeManager.ActiveTheme.accent)
+                                .font(.system(size: 16*size, weight: .regular))
                         }
                         
-                        HStack(spacing: 5) {
+                        HStack(spacing: 5*size) {
                             Text("Raça:")
                                 .foregroundStyle(themeManager.ActiveTheme.text)
+                                .font(.system(size: 16*size, weight: .regular))
                             
-                            Text("Gatito")
+                            Text(character.species)
                                 .foregroundStyle(themeManager.ActiveTheme.accent)
+                                .font(.system(size: 16*size, weight: .regular))
                         }
                         
-                        HStack(spacing: 5) {
+                        HStack(spacing: 5*size) {
                             Image(systemName: "asterisk")
-                                .font(.system(size: 15,weight: .black))
+                                .font(.system(size: 15*size,weight: .black))
                                 .foregroundStyle(.red)
                             
-                            Text("100/100")
+                            Text("\(character.health)/\(character.healthMax)")
                                 .foregroundStyle(.red)
-                                .font(.system(size: 16,weight: .bold))
+                                .font(.system(size: 16*size,weight: .bold))
                             
                             Image(systemName: "shield.lefthalf.filled")
-                                .font(.system(size: 15,weight: .black))
+                                .font(.system(size: 15*size,weight: .black))
                                 .foregroundStyle(.blue)
                             
-                            Text("100/100")
+                            Text("\(character.defense)/\(character.defenseMax)")
                                 .foregroundStyle(.blue)
-                                .font(.system(size: 16,weight: .bold))
+                                .font(.system(size: 16*size,weight: .bold))
                         }
                     }
                     
                     Spacer()
                 }
             }
-            .shadow(radius: 10)
+            .shadow(radius: 10*size)
         }
     }
 }
 
 #Preview {
+    let guy = CharacterModel(
+        name: "La Creatura",
+        shortDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        description: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        level: 0,
+        experience: 100,
+        classification: .cleric,
+        species: "Gatito",
+        health: 100,
+        healthMax: 100,
+        defense: 100,
+        defenseMax: 100
+    )
+    
     ZStack {
         Color.orange.edgesIgnoringSafeArea(.all).opacity(0.2)
         
-        CharacterModal()
+        CharacterModal(size: 1, character: guy)
     }
 }

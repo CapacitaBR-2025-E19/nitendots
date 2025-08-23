@@ -23,7 +23,7 @@ enum CharacterClass:String, CaseIterable {
     case wizard = "Mago"
 }
 
-struct CharaterModel {
+struct CharacterModel {
     var name:String
     var shortDescription:String
     var description:String
@@ -32,21 +32,11 @@ struct CharaterModel {
     var experience:Int
     
     var classification:CharacterClass
-    var species:String // eu quero muito fazer um seletor disso, mas QUE PREGUIÇA de colocar TROÇENTAS RAÇAS e ainda não conseguir colocar todas
+    var species:String
     
     var health:Int
     var healthMax:Int
     
     var defense:Int
     var defenseMax:Int
-    
-    // FUNÇÕES
-    
-    func damage() {
-        // implementar calculo de dano amanhã (TO-DO 23/08)
-    }
-    
-    func heal() {
-        // mesma coisa aqui
-    }
 }
