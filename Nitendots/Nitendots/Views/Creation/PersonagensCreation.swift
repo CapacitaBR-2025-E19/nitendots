@@ -123,7 +123,8 @@ struct PersonagensCreation: View {
                         .padding(.horizontal)
                     }
                     .listStyle(.plain)
-                    .frame(height: 90*5)
+                    .frame(height: 90*6)
+                    .scrollDisabled(true)
                 }
             }
         }

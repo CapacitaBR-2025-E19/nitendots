@@ -8,8 +8,28 @@
 import SwiftUI
 
 struct Personagens: View {
+    @State var characterViewModel = CharacterViewModel()
+    
     var body: some View {
-        Text("hi")
+        ScrollView {
+            VStack {
+                ForEach(characterViewModel.characters) { charater in
+                    CharacterModal(size: 1, character: charater)
+                        .padding(.horizontal)
+                }
+            }
+        }
+        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink{
+                    PersonagensCreation(characterInfo: $characterViewModel.currentCreatedCharacter)
+                } label: {
+                    Text("Adicionar")
+                }
+            }
+        }
+        .navigationTitle("Personagens")
     }
 }
 

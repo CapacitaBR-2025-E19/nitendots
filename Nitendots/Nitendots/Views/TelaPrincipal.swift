@@ -41,21 +41,18 @@ struct TelaPrincipal: View {
                     /*
                     NavigationLink {
                     } label: {
-                        MenuButton(isDisabled: true, icon: "map.fill", text: "MAPAS")
+                        MenuButton(isDisabled: false, icon: "map.fill", text: "MAPAS")
                             .frame(width: UIScreen.main.bounds.width - 30, height: 90)
                    
                     } */
                     
-                    // MESMA COISA AQUI!!!!!
-                    MenuButton(isDisabled: true, icon: "person.2.fill", text: "PERSONAGENS")
-                        .frame(width: UIScreen.main.bounds.width - 30, height: 90)
-                    /*
                     NavigationLink {
+                        Personagens()
                     } label: {
-                        MenuButton(isDisabled: true, icon: "person.2.fill", text: "PERSONAGENS")
+                        MenuButton(isDisabled: false, icon: "person.2.fill", text: "PERSONAGENS")
                             .frame(width: UIScreen.main.bounds.width - 30, height: 90)
                    
-                    }*/
+                    }
                     
                     NavigationLink {
                         Configuracoes()

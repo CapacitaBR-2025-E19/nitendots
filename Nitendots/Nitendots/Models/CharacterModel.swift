@@ -25,7 +25,7 @@ enum CharacterClass:String, CaseIterable, Identifiable {
     var id:String {self.rawValue}
 }
 
-struct CharacterModel {
+struct CharacterModel:Identifiable {
     var name:String
     var shortDescription:String
     var description:String
@@ -40,4 +40,6 @@ struct CharacterModel {
     
     var defense:Int
     var defenseMax:Int
+    
+    let id:UUID = UUID()
 }
