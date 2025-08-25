@@ -43,24 +43,87 @@ struct PersonagensCreation: View {
                     )
                     .padding(30)
                     
-                    let textFields = [
-                        E19TextField(text: $characterInfo.name, label: "Nome:"),
+                    List {
+                        E19TextField(text: $characterInfo.name, label: "Nome:")
+                            .listRowBackground(Color.clear)
                         
-                        E19TextField(text: $characterInfo.description, label: "Descrição:"),
+                        E19TextField(text: $characterInfo.description, label: "Descrição:")
+                            .listRowBackground(Color.clear)
                         
-                        E19TextField(text: $characterInfo.shortDescription, label: "Descrição Curta:"),
+                        E19TextField(text: $characterInfo.shortDescription, label: "Descrição Curta:")
+                            .listRowBackground(Color.clear)
                         
                         E19TextField(text: $characterInfo.species, label: "Raça:")
-                    ]
-                    
-                    List {
-                        ForEach(textFields) { field in
-                            field
                             .listRowBackground(Color.clear)
+                        
+                        HStack {
+                            Text("Classe:")
+                                .font(.system(size: 17, weight: .semibold))
+                            
+                            Spacer()
+                            
+                            Picker("", selection: $characterInfo.classification) {
+                                ForEach(CharacterClass.allCases) { classType in
+                                    Text(classType.rawValue)
+                                        .tag(classType)
+                                }
+                            }
+                            .frame(width: 205, alignment: .trailing)
+                            .labelsHidden()
                         }
+                        .listRowBackground(Color.clear)
+                        .padding(.horizontal)
+                        
+                        HStack {
+                            Text("Nível:")
+                                .font(.system(size: 17, weight: .semibold))
+                            Image(systemName: "chart.bar.xaxis")
+                                .font(.system(size: 17, weight: .semibold))
+                                .foregroundStyle(.orange)
+                            
+                            Spacer()
+                            
+                            Text("\(characterInfo.level)")
+                                .foregroundStyle(.orange)
+                            Stepper("", value: $characterInfo.level)
+                        }
+                        .listRowBackground(Color.clear)
+                        .padding(.horizontal)
+                        
+                        HStack {
+                            Text("Defesa:")
+                                .font(.system(size: 17, weight: .semibold))
+                            Image(systemName: "shield.lefthalf.fill")
+                                .font(.system(size: 17, weight: .semibold))
+                                .foregroundStyle(.blue)
+                            
+                            Spacer()
+                            
+                            Text("\(characterInfo.defenseMax)")
+                                .foregroundStyle(.blue)
+                            Stepper("", value: $characterInfo.defenseMax)
+                        }
+                        .listRowBackground(Color.clear)
+                        .padding(.horizontal)
+                        
+                        HStack {
+                            Text("Vida:")
+                                .font(.system(size: 17, weight: .semibold))
+                            Image(systemName: "asterisk")
+                                .font(.system(size: 17, weight: .semibold))
+                                .foregroundStyle(.red)
+                            
+                            Spacer()
+                            
+                            Text("\(characterInfo.healthMax)")
+                                .foregroundStyle(.red)
+                            Stepper("", value: $characterInfo.healthMax)
+                        }
+                        .listRowBackground(Color.clear)
+                        .padding(.horizontal)
                     }
                     .listStyle(.plain)
-                    .frame(height: 90*4)
+                    .frame(height: 90*5)
                 }
             }
         }
@@ -73,7 +136,6 @@ struct PersonagensCreation: View {
         shortDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         description: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         level: 0,
-        experience: 100,
         classification: .cleric,
         species: "Gatito",
         health: 100,

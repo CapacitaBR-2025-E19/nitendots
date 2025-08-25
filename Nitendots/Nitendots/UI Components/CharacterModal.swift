@@ -90,7 +90,7 @@ struct CharacterModal: View {
                                 .foregroundStyle(themeManager.ActiveTheme.text)
                                 .font(.system(size: 16*size, weight: .regular))
                             
-                            Text(character.classification.rawValue)
+                            Text(character.classification!.rawValue)
                                 .foregroundStyle(themeManager.ActiveTheme.accent)
                                 .font(.system(size: 16*size, weight: .regular))
                         }
@@ -138,7 +138,6 @@ struct CharacterModal: View {
         shortDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         description: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         level: 0,
-        experience: 100,
         classification: .cleric,
         species: "Gatito",
         health: 100,

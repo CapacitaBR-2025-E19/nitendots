@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CharacterClass:String, CaseIterable {
+enum CharacterClass:String, CaseIterable, Identifiable {   
     case barbarian = "Barbaro"
     case druid = "Druida"
     case paladin = "Paladino"
@@ -21,6 +21,8 @@ enum CharacterClass:String, CaseIterable {
     case cleric = "Clerigo"
     case monk = "Monge"
     case wizard = "Mago"
+    
+    var id:String {self.rawValue}
 }
 
 struct CharacterModel {
@@ -29,9 +31,8 @@ struct CharacterModel {
     var description:String
     
     var level:Int
-    var experience:Int
     
-    var classification:CharacterClass
+    var classification:CharacterClass?
     var species:String
     
     var health:Int
