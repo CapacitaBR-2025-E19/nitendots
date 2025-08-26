@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import SwiftData
 
-enum CharacterClass:String, CaseIterable, Identifiable {   
+enum CharacterClass:String, CaseIterable, Identifiable, Codable {   
     case barbarian = "Barbaro"
     case druid = "Druida"
     case paladin = "Paladino"
@@ -25,10 +26,13 @@ enum CharacterClass:String, CaseIterable, Identifiable {
     var id:String {self.rawValue}
 }
 
-struct CharacterModel:Identifiable {
+@Model
+class CharacterModel:Identifiable {
+    var image:Data?
+    
     var name:String
     var shortDescription:String
-    var description:String
+    var regularDescription:String
     
     var level:Int
     
@@ -41,5 +45,24 @@ struct CharacterModel:Identifiable {
     var defense:Int
     var defenseMax:Int
     
-    let id:UUID = UUID()
+    private(set) var id:UUID = UUID()
+    
+    init(image: Data? = nil, name:String, shortDescription:String, regularDescription:String, level:Int, classification:CharacterClass?, species:String, health:Int, healthMax:Int, defense:Int, defenseMax:Int) {
+        self.image = image
+        
+        self.name = name
+        self.shortDescription = shortDescription
+        self.regularDescription = regularDescription
+        
+        self.level = level
+        
+        self.classification = classification
+        self.species = species
+        
+        self.health = health
+        self.healthMax = healthMax
+        
+        self.defense = defense
+        self.defenseMax = defenseMax
+    }
 }

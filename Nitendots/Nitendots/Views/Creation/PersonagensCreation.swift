@@ -6,9 +6,34 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct PersonagensCreation: View {
+    @Environment(\.modelContext) var context
+    @Environment(\.dismiss) var dismiss
+    
     @Binding var characterInfo:CharacterModel
+    @Binding var characterViewModel:CharacterViewModel
+    
+    @State var photo:PhotosPickerItem?
+    
+    @State var imageData:Data?
+    
+    func getImageData() async {
+        if let data = try? await photo?.loadTransferable(type: Data.self) {
+            imageData = data
+            characterInfo.image = data
+        }
+    }
+    
+    func getImageFromPickerItem() -> Image {
+        if let imageData = imageData,
+            let uiImage = UIImage(data: imageData) {
+            return Image(uiImage: uiImage)
+        } else {
+            return Image("ButtonDice")
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -20,34 +45,39 @@ struct PersonagensCreation: View {
                         .fill(Color.white)
                         .frame(width: 250, height: 250)
                         .overlay {
-                            RoundedRectangle(cornerRadius:12.5)
+                            getImageFromPickerItem()
+                                .resizable()
+                                .frame(width: 230, height: 230)
+                                .scaledToFill()
+                                .aspectRatio(contentMode: .fill)
+                                .background(Color.black)
+                                .clipped()
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                                 .padding(7.5)
-                                .overlay(
-                                    Image("ButtonDice") // cat e dog não funfa, vou testar depois com outra foto
-                                        .resizable()
-                                        .scaledToFill()
-                                        .padding(45)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12.5))
-                                )
                         }
                         .shadow(radius: 10)
                     
-                    Button(
-                        action: {
-                            print("foto selecionar")
-                        },
+                    
+                    PhotosPicker(
+                        selection: $photo,
+                        matching: .images,
                         label: {
                             Text("Selecionar Foto")
                                 .font(.system(size: 17, weight: .semibold))
                         }
                     )
                     .padding(30)
+                    .onChange(of: photo) {
+                        Task {
+                            await getImageData()
+                        }
+                    }
                     
                     List {
                         E19TextField(text: $characterInfo.name, label: "Nome:")
                             .listRowBackground(Color.clear)
                         
-                        E19TextField(text: $characterInfo.description, label: "Descrição:")
+                        E19TextField(text: $characterInfo.regularDescription, label: "Descrição:")
                             .listRowBackground(Color.clear)
                         
                         E19TextField(text: $characterInfo.shortDescription, label: "Descrição Curta:")
@@ -128,6 +158,25 @@ struct PersonagensCreation: View {
                 }
             }
         }
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(
+                    action: {
+                        characterInfo.health = characterInfo.healthMax
+                        characterInfo.defense = characterInfo.defenseMax
+                        
+                        characterViewModel.saveCharacter(characterInfo, context: context)
+                        
+                        characterViewModel.resetCharacter()
+                        
+                        dismiss()
+                    },
+                    label: {
+                        Text("Salvar")
+                    }
+                )
+            }
+        }
     }
 }
 
@@ -135,7 +184,7 @@ struct PersonagensCreation: View {
     @State @Previewable var guy = CharacterModel(
         name: "La Creatura",
         shortDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        description: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        regularDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         level: 0,
         classification: .cleric,
         species: "Gatito",
@@ -145,5 +194,7 @@ struct PersonagensCreation: View {
         defenseMax: 100
     )
     
-    PersonagensCreation(characterInfo: $guy)
+    @State @Previewable var characterVM: CharacterViewModel = CharacterViewModel()
+    
+    PersonagensCreation(characterInfo: $guy, characterViewModel: $characterVM)
 }

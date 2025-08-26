@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 @Observable
 class CharacterViewModel {
@@ -15,7 +16,7 @@ class CharacterViewModel {
     var currentCreatedCharacter:CharacterModel = CharacterModel(
         name: "",
         shortDescription: "",
-        description: "",
+        regularDescription: "",
         level: 0,
         classification: .cleric,
         species: "",
@@ -25,15 +26,48 @@ class CharacterViewModel {
         defenseMax: 0
     )
     
-    func createCharacter(_ character:CharacterModel) {
+    func resetCharacter() {
+        currentCreatedCharacter = CharacterModel(
+            name: "",
+            shortDescription: "",
+            regularDescription: "",
+            level: 0,
+            classification: .cleric,
+            species: "",
+            health: 0,
+            healthMax: 0,
+            defense: 0,
+            defenseMax: 0
+        )
+    }
+    
+    func saveCharacter(_ character:CharacterModel, context:ModelContext) {
         characters.append(character)
+        
+        context.insert(character)
+        do {
+            try context.save()
+        } catch {
+            print("Context save error (ih): \(error)")
+        }
+    }
+    
+    func removeCharacter(_ character:CharacterModel, context:ModelContext) {
+        characters.removeAll(where: {$0.id == character.id})
+        
+        context.delete(character)
+        do {
+            try context.save()
+        } catch {
+            print("Context delete error (waow): \(error)")
+        }
     }
     
     init() {
         let guy = CharacterModel(
             name: "La Creatura",
             shortDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            description: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            regularDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             level: 0,
             classification: .cleric,
             species: "Gatito",

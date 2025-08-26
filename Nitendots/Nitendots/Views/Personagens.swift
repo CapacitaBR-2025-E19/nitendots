@@ -23,7 +23,7 @@ struct Personagens: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink{
-                    PersonagensCreation(characterInfo: $characterViewModel.currentCreatedCharacter)
+                    PersonagensCreation(characterInfo: $characterViewModel.currentCreatedCharacter, characterViewModel: $characterViewModel)
                 } label: {
                     Text("Adicionar")
                 }

@@ -14,6 +14,15 @@ struct CharacterModal: View {
     
     var character:CharacterModel
     
+    func getImageFromPickerItem() -> Image {
+        if let imageData = character.image,
+            let uiImage = UIImage(data: imageData) {
+            return Image(uiImage: uiImage)
+        } else {
+            return Image("ButtonDice")
+        }
+    }
+    
     var body: some View {
         ZStack(alignment: .top) {
             UnevenRoundedRectangle(cornerRadii:
@@ -32,7 +41,7 @@ struct CharacterModal: View {
                     
                     Text(character.shortDescription)
                         .padding(.horizontal)
-                        .lineLimit(3)
+                        .lineLimit(3, reservesSpace: true)
                         .foregroundStyle(themeManager.ActiveTheme.text)
                         .font(.system(size: 16*size, weight: .regular))
                     
@@ -75,9 +84,13 @@ struct CharacterModal: View {
                     Circle()
                         .foregroundStyle(themeManager.ActiveTheme.primary)
                         .overlay {
-                            Circle()
+                            getImageFromPickerItem()
+                                .resizable()
+                                .scaledToFill()
+                                .background(Color.black)
+                                .clipped()
+                                .clipShape(Circle())
                                 .padding(7.5*size)
-                                .foregroundStyle(.blue) // imagem
                         }
                     
                     VStack(alignment: .leading, spacing: 5*size) {
@@ -136,7 +149,7 @@ struct CharacterModal: View {
     let guy = CharacterModel(
         name: "La Creatura",
         shortDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        description: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        regularDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         level: 0,
         classification: .cleric,
         species: "Gatito",
