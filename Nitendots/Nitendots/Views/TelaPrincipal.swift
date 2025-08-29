@@ -35,17 +35,6 @@ struct TelaPrincipal: View {
                    
                     }
                     
-                    // DELETAR O BOTÃO ABAIXO E HABILITAR O NAVIGATIONLINK QUANDO FEITO
-                    MenuButton(isDisabled: true, icon: "map.fill", text: "MAPAS")
-                        .frame(width: UIScreen.main.bounds.width - 30, height: 90)
-                    /*
-                    NavigationLink {
-                    } label: {
-                        MenuButton(isDisabled: false, icon: "map.fill", text: "MAPAS")
-                            .frame(width: UIScreen.main.bounds.width - 30, height: 90)
-                   
-                    } */
-                    
                     NavigationLink {
                         Personagens()
                     } label: {
@@ -62,17 +51,7 @@ struct TelaPrincipal: View {
                    
                     }
                     
-                    // Fim dos Links de Navigação
-                    
-                    Text("Aplicativo em desenvolvimento, alguns itens não estão funcionais!")
-                        .multilineTextAlignment(.center)
-                        .frame(width: UIScreen.main.bounds.width, height: 60)
-                        .background {
-                            Rectangle()
-                                .foregroundStyle(
-                                    themeManager.ActiveTheme.accent == Color.accent4 ? Color.red : Color.orange
-                                )
-                        }
+                    Text("1.0.0")
                 }
             }
         }

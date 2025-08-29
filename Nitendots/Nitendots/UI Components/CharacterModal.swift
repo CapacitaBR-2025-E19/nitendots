@@ -37,13 +37,15 @@ struct CharacterModal: View {
             .frame(width: 350*size, height: 300*size)
             .foregroundStyle(themeManager.ActiveTheme.primary)
             .overlay {
-                VStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
                     Spacer()
                         .frame(height: 130*size)
                     
                     Text("Descrição:")
                         .font(.system(size: 18*size, weight: .bold))
                         .foregroundStyle(themeManager.ActiveTheme.text)
+                        .padding(.horizontal)
+                        .padding(.top, 8)
                     
                     Text(character.shortDescription)
                         .padding(.horizontal)
@@ -117,20 +119,20 @@ struct CharacterModal: View {
                         HStack(spacing: 5*size) {
                             Text("Classe:")
                                 .foregroundStyle(themeManager.ActiveTheme.text)
-                                .font(.system(size: 16*size, weight: .regular))
+                                .font(.system(size: 16*size, weight: .bold))
                             
                             Text(character.classification!.rawValue)
-                                .foregroundStyle(themeManager.ActiveTheme.accent)
+                                .foregroundStyle(themeManager.ActiveTheme.text)
                                 .font(.system(size: 16*size, weight: .regular))
                         }
                         
                         HStack(spacing: 5*size) {
                             Text("Raça:")
                                 .foregroundStyle(themeManager.ActiveTheme.text)
-                                .font(.system(size: 16*size, weight: .regular))
+                                .font(.system(size: 16*size, weight: .bold))
                             
                             Text(character.species)
-                                .foregroundStyle(themeManager.ActiveTheme.accent)
+                                .foregroundStyle(themeManager.ActiveTheme.text)
                                 .font(.system(size: 16*size, weight: .regular))
                         }
                         
@@ -237,10 +239,11 @@ struct CharacterModal: View {
                             }
                         }
                         
-                        VStack(spacing: 10) {
+                        VStack(alignment: .leading, spacing: 10) {
                             Text("Descrição Curta:")
                                 .font(.system(size: 18*size, weight: .bold))
                                 .foregroundStyle(themeManager.ActiveTheme.text)
+                                .padding(.horizontal)
                             
                             Text(character.shortDescription)
                                 .padding(.horizontal)
@@ -250,6 +253,7 @@ struct CharacterModal: View {
                             Text("Descrição Completa:")
                                 .font(.system(size: 18*size, weight: .bold))
                                 .foregroundStyle(themeManager.ActiveTheme.text)
+                                .padding(.horizontal)
                             
                             Text(character.shortDescription)
                                 .padding(.horizontal)
@@ -261,12 +265,16 @@ struct CharacterModal: View {
                                     .font(.system(size: 17, weight: .semibold))
                                 Image(systemName: "chart.bar.xaxis")
                                     .font(.system(size: 17, weight: .semibold))
-                                    .foregroundStyle(.orange)
+                                    .foregroundStyle(
+                                        themeManager.ActiveTheme.accent == themeManager.Themes[4].accent ? Color.green : Color.orange
+                                    )
                                 
                                 Spacer()
                                 
                                 Text("\(character.level)")
-                                    .foregroundStyle(.orange)
+                                    .foregroundStyle(
+                                        themeManager.ActiveTheme.accent == themeManager.Themes[4].accent ? Color.green : Color.orange
+                                    )
                                 Stepper("", value: $character.level)
                             }
                             .listRowBackground(Color.clear)
