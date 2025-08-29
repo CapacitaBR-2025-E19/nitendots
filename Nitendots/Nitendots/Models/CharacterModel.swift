@@ -45,7 +45,7 @@ class CharacterModel:Identifiable {
     var defense:Int
     var defenseMax:Int
     
-    private(set) var id:UUID = UUID()
+    var id:UUID = UUID()
     
     init(image: Data? = nil, name:String, shortDescription:String, regularDescription:String, level:Int, classification:CharacterClass?, species:String, health:Int, healthMax:Int, defense:Int, defenseMax:Int) {
         self.image = image

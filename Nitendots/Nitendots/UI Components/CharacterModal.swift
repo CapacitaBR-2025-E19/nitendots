@@ -12,7 +12,9 @@ struct CharacterModal: View {
     
     var size:CGFloat
     
-    var character:CharacterModel
+    @Binding var character:CharacterModel
+    
+    @Binding var characterViewModel:CharacterViewModel
     
     func getImageFromPickerItem() -> Image {
         if let imageData = character.image,
@@ -48,20 +50,24 @@ struct CharacterModal: View {
                     Spacer()
                     
                     HStack(spacing: -20*size) {
-                        RoundedRectangle(cornerRadius: 30*size)
-                            .frame(width: 100*size, height: 55*size)
-                            .padding(.horizontal)
-                            .foregroundStyle(themeManager.ActiveTheme.tertiary)
-                            .overlay {
-                                Image(systemName: "gearshape.fill")
-                                    .font(.system(size: 30*size))
-                                    .foregroundStyle(themeManager.ActiveTheme.primary)
-                            }
+                        NavigationLink {
+                            PersonagensCreation(characterInfo: $character, characterViewModel: $characterViewModel, isEditing: true)
+                        } label: {
+                            RoundedRectangle(cornerRadius: 30*size)
+                                .frame(width: 100*size, height: 55*size)
+                                .padding(.horizontal)
+                                .foregroundStyle(themeManager.ActiveTheme.accent)
+                                .overlay {
+                                    Image(systemName: "gearshape.fill")
+                                        .font(.system(size: 30*size))
+                                        .foregroundStyle(themeManager.ActiveTheme.primary)
+                                }
+                        }
                         
                         RoundedRectangle(cornerRadius: 30*size)
                             .frame(height: 55*size)
                             .padding(.horizontal)
-                            .foregroundStyle(themeManager.ActiveTheme.tertiary)
+                            .foregroundStyle(themeManager.ActiveTheme.accent)
                             .overlay{
                                 Image(systemName: "gamecontroller.fill")
                                     .font(.system(size: 30*size))
@@ -146,7 +152,9 @@ struct CharacterModal: View {
 }
 
 #Preview {
-    let guy = CharacterModel(
+    @State @Previewable var characterVM: CharacterViewModel = CharacterViewModel()
+    
+    @State @Previewable var guy = CharacterModel(
         name: "La Creatura",
         shortDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         regularDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
@@ -158,10 +166,11 @@ struct CharacterModal: View {
         defense: 100,
         defenseMax: 100
     )
-    
-    ZStack {
-        Color.orange.edgesIgnoringSafeArea(.all).opacity(0.2)
-        
-        CharacterModal(size: 1, character: guy)
+    NavigationStack{
+        ZStack {
+            Color.orange.edgesIgnoringSafeArea(.all).opacity(0.2)
+            
+            CharacterModal(size: 1, character: $guy, characterViewModel: $characterVM)
+        }
     }
 }

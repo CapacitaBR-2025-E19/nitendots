@@ -41,10 +41,32 @@ class CharacterViewModel {
         )
     }
     
-    func saveCharacter(_ character:CharacterModel, context:ModelContext) {
-        characters.append(character)
-        
-        context.insert(character)
+    func saveCharacter(_ character:CharacterModel, context:ModelContext, isEditing:Bool) {
+        if !isEditing {
+            characters.append(character)
+            
+            context.insert(character)
+        }
+        else {
+            for storedCharacter in characters {
+                if storedCharacter.id == character.id {
+                    storedCharacter.name = character.name
+                    storedCharacter.shortDescription = character.shortDescription
+                    storedCharacter.regularDescription = character.regularDescription
+                    storedCharacter.level = character.level
+                    storedCharacter.classification = character.classification
+                    storedCharacter.species = character.species
+                    storedCharacter.health = character.health
+                    storedCharacter.healthMax = character.healthMax
+                    storedCharacter.defense = character.defense
+                    storedCharacter.defenseMax = character.defenseMax
+                    
+                    
+                    context.processPendingChanges()
+                }
+            }
+        }
+
         do {
             try context.save()
         } catch {

@@ -156,7 +156,7 @@ struct Configuracoes: View {
             }
         }
         
-        .navigationTitle(Text("Configurações"))
+        .navigationTitle("Configurações")
         .toolbarBackground(themeManager.ActiveTheme.primary, for: .navigationBar)
             .toolbarBackgroundVisibility(.visible)
         

@@ -12,12 +12,16 @@ struct PersonagensCreation: View {
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
     
+    @ObservedObject private var themeManager:ThemeManager = .shared
+    
     @Binding var characterInfo:CharacterModel
     @Binding var characterViewModel:CharacterViewModel
     
-    @State var photo:PhotosPickerItem?
+    @State var photo:PhotosPickerItem? = nil
     
-    @State var imageData:Data?
+    @State var imageData:Data? = nil
+    
+    var isEditing:Bool
     
     func getImageData() async {
         if let data = try? await photo?.loadTransferable(type: Data.self) {
@@ -27,20 +31,30 @@ struct PersonagensCreation: View {
     }
     
     func getImageFromPickerItem() -> Image {
-        if let imageData = imageData,
-            let uiImage = UIImage(data: imageData) {
-            return Image(uiImage: uiImage)
-        } else {
-            return Image("ButtonDice")
+        if imageData == nil {
+            if let image = characterInfo.image, let uiImage = UIImage(data: image) { // Sem foto escolhida no picker, foto existente no model
+                return Image(uiImage: uiImage)
+            }
         }
+        else {
+            if let imageData = imageData, let uiImage = UIImage(data: imageData) { // Imagem escolhida no picker
+                return Image(uiImage: uiImage)
+            }
+        }
+        
+        return Image("ButtonDice") // Não tem nada, imagem padrão
     }
     
     var body: some View {
         ZStack {
-            Color.gray.opacity(0.2).edgesIgnoringSafeArea(.all)
+            themeManager.ActiveTheme.secondary
+                .ignoresSafeArea(edges: .all)
             
             ScrollView {
                 VStack(spacing: 0) {
+                    Spacer()
+                        .frame(height: 20)
+                    
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.white)
                         .frame(width: 250, height: 250)
@@ -165,7 +179,7 @@ struct PersonagensCreation: View {
                         characterInfo.health = characterInfo.healthMax
                         characterInfo.defense = characterInfo.defenseMax
                         
-                        characterViewModel.saveCharacter(characterInfo, context: context)
+                        characterViewModel.saveCharacter(characterInfo, context: context, isEditing: isEditing)
                         
                         characterViewModel.resetCharacter()
                         
@@ -177,6 +191,9 @@ struct PersonagensCreation: View {
                 )
             }
         }
+        .navigationTitle(isEditing ? "Editar" : "Criar")
+        .toolbarBackground(themeManager.ActiveTheme.primary, for: .navigationBar)
+        .toolbarBackgroundVisibility(.visible)
     }
 }
 
@@ -196,5 +213,5 @@ struct PersonagensCreation: View {
     
     @State @Previewable var characterVM: CharacterViewModel = CharacterViewModel()
     
-    PersonagensCreation(characterInfo: $guy, characterViewModel: $characterVM)
+    PersonagensCreation(characterInfo: $guy, characterViewModel: $characterVM, isEditing: false)
 }
