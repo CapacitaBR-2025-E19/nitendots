@@ -56,7 +56,7 @@ struct PersonagensCreation: View {
                         .frame(height: 20)
                     
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.white)
+                        .fill(themeManager.ActiveTheme.primary)
                         .frame(width: 250, height: 250)
                         .overlay {
                             getImageFromPickerItem()

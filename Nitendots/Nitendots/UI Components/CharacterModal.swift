@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CharacterModal: View {
+    @Environment(\.modelContext) var context
+    
     @ObservedObject private var themeManager:ThemeManager = .shared
     
     @State private var showCharacterModal:Bool = false
@@ -174,13 +176,145 @@ struct CharacterModal: View {
                     }
                     
                     // Conteudo
-                    Text("conteudo placeholder")
-                        .presentationDetents([.height(700)])
-                        .presentationDragIndicator(.visible)
-                        .presentationBackground(themeManager.ActiveTheme.primary)
-                    
+                    ScrollView(.vertical) {
+                        HStack {
+                            RoundedRectangle(cornerRadius: 15)
+                                .frame(width: 120, height: 120)
+                                .foregroundStyle(themeManager.ActiveTheme.secondary)
+                                .overlay {
+                                    getImageFromPickerItem()
+                                        .resizable()
+                                        .frame(width: 100, height: 100)
+                                        .background(Color.black)
+                                        .scaledToFill()
+                                        .clipped()
+                                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                                        .padding(10)
+                                }
+                            
+                            VStack(alignment: .leading, spacing: 5*size) {
+                                Text(character.name)
+                                    .font(.system(size: 18, weight: .bold))
+                                    .foregroundStyle(themeManager.ActiveTheme.text)
+                                
+                                HStack(spacing: 5*size) {
+                                    Text("Classe:")
+                                        .foregroundStyle(themeManager.ActiveTheme.text)
+                                        .font(.system(size: 16, weight: .regular))
+                                    
+                                    Text(character.classification!.rawValue)
+                                        .foregroundStyle(themeManager.ActiveTheme.accent)
+                                        .font(.system(size: 16, weight: .regular))
+                                }
+                                
+                                HStack(spacing: 5*size) {
+                                    Text("Raça:")
+                                        .foregroundStyle(themeManager.ActiveTheme.text)
+                                        .font(.system(size: 16, weight: .regular))
+                                    
+                                    Text(character.species)
+                                        .foregroundStyle(themeManager.ActiveTheme.accent)
+                                        .font(.system(size: 16, weight: .regular))
+                                }
+                                
+                                HStack(spacing: 5*size) {
+                                    Image(systemName: "asterisk")
+                                        .font(.system(size: 15,weight: .black))
+                                        .foregroundStyle(.red)
+                                    
+                                    Text("\(character.health)/\(character.healthMax)")
+                                        .foregroundStyle(.red)
+                                        .font(.system(size: 16,weight: .bold))
+                                    
+                                    Image(systemName: "shield.lefthalf.filled")
+                                        .font(.system(size: 15,weight: .black))
+                                        .foregroundStyle(.blue)
+                                    
+                                    Text("\(character.defense)/\(character.defenseMax)")
+                                        .foregroundStyle(.blue)
+                                        .font(.system(size: 16,weight: .bold))
+                                }
+                            }
+                        }
+                        
+                        VStack(spacing: 10) {
+                            Text("Descrição Curta:")
+                                .font(.system(size: 18*size, weight: .bold))
+                                .foregroundStyle(themeManager.ActiveTheme.text)
+                            
+                            Text(character.shortDescription)
+                                .padding(.horizontal)
+                                .foregroundStyle(themeManager.ActiveTheme.text)
+                                .font(.system(size: 16*size, weight: .regular))
+                            
+                            Text("Descrição Completa:")
+                                .font(.system(size: 18*size, weight: .bold))
+                                .foregroundStyle(themeManager.ActiveTheme.text)
+                            
+                            Text(character.shortDescription)
+                                .padding(.horizontal)
+                                .foregroundStyle(themeManager.ActiveTheme.text)
+                                .font(.system(size: 16*size, weight: .regular))
+                            
+                            HStack {
+                                Text("Nível:")
+                                    .font(.system(size: 17, weight: .semibold))
+                                Image(systemName: "chart.bar.xaxis")
+                                    .font(.system(size: 17, weight: .semibold))
+                                    .foregroundStyle(.orange)
+                                
+                                Spacer()
+                                
+                                Text("\(character.level)")
+                                    .foregroundStyle(.orange)
+                                Stepper("", value: $character.level)
+                            }
+                            .listRowBackground(Color.clear)
+                            .padding(.horizontal)
+                            
+                            HStack {
+                                Text("Defesa:")
+                                    .font(.system(size: 17, weight: .semibold))
+                                Image(systemName: "shield.lefthalf.fill")
+                                    .font(.system(size: 17, weight: .semibold))
+                                    .foregroundStyle(.blue)
+                                
+                                Spacer()
+                                
+                                Text("\(character.defense)")
+                                    .foregroundStyle(.blue)
+                                Stepper("", value: $character.defense)
+                            }
+                            .listRowBackground(Color.clear)
+                            .padding(.horizontal)
+                            
+                            HStack {
+                                Text("Vida:")
+                                    .font(.system(size: 17, weight: .semibold))
+                                Image(systemName: "asterisk")
+                                    .font(.system(size: 17, weight: .semibold))
+                                    .foregroundStyle(.red)
+                                
+                                Spacer()
+                                
+                                Text("\(character.health)")
+                                    .foregroundStyle(.red)
+                                Stepper("", value: $character.health)
+                            }
+                            .listRowBackground(Color.clear)
+                            .padding(.horizontal)
+                        }
+                        .padding(.vertical)
+                    }
                     Spacer()
+                    
+                        .presentationDetents([.height(650)])
+                        .presentationBackground(themeManager.ActiveTheme.primary)
+                        .presentationDragIndicator(.visible)
                 }
+            }
+            .onChange(of: showCharacterModal) {
+                characterViewModel.saveCharacter(character, context: context, isEditing: true)
             }
         }
     }

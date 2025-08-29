@@ -85,7 +85,7 @@ class CharacterViewModel {
         }
     }
     
-    init() {
+    init() { // TO-DO TIRAR LA CREATURA DO PRODUTO FINAL
         let guy = CharacterModel(
             name: "La Creatura",
             shortDescription: "Lorem ipsum dolor sit amet consectur adispicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
