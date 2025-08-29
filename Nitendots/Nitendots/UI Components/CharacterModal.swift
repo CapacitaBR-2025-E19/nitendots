@@ -10,6 +10,8 @@ import SwiftUI
 struct CharacterModal: View {
     @ObservedObject private var themeManager:ThemeManager = .shared
     
+    @State private var showCharacterModal:Bool = false
+    
     var size:CGFloat
     
     @Binding var character:CharacterModel
@@ -64,15 +66,21 @@ struct CharacterModal: View {
                                 }
                         }
                         
-                        RoundedRectangle(cornerRadius: 30*size)
-                            .frame(height: 55*size)
-                            .padding(.horizontal)
-                            .foregroundStyle(themeManager.ActiveTheme.accent)
-                            .overlay{
-                                Image(systemName: "gamecontroller.fill")
-                                    .font(.system(size: 30*size))
-                                    .foregroundStyle(themeManager.ActiveTheme.primary)
-                            }
+                        Button(
+                            action: {
+                                showCharacterModal.toggle()
+                            },
+                            label: {
+                            RoundedRectangle(cornerRadius: 30*size)
+                                .frame(height: 55*size)
+                                .padding(.horizontal)
+                                .foregroundStyle(themeManager.ActiveTheme.accent)
+                                .overlay{
+                                    Image(systemName: "gamecontroller.fill")
+                                        .font(.system(size: 30*size))
+                                        .foregroundStyle(themeManager.ActiveTheme.primary)
+                                }
+                        })
                     }
                     
                     Spacer()
@@ -147,6 +155,33 @@ struct CharacterModal: View {
                 }
             }
             .shadow(radius: 10*size)
+            
+            // SHEETS
+            
+            .sheet(isPresented: $showCharacterModal) {
+                VStack {
+                    // Titulo e Closer
+                    ZStack() {
+                        Text("Controles do Personagem")
+                            .font(.headline)
+                            .foregroundStyle(themeManager.ActiveTheme.text)
+                        
+                        HStack {
+                            Spacer()
+                            
+                            CloserButton(size: 1)
+                        }
+                    }
+                    
+                    // Conteudo
+                    Text("conteudo placeholder")
+                        .presentationDetents([.height(700)])
+                        .presentationDragIndicator(.visible)
+                        .presentationBackground(themeManager.ActiveTheme.primary)
+                    
+                    Spacer()
+                }
+            }
         }
     }
 }
